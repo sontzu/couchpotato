@@ -12,14 +12,15 @@
   ;; rather than having its own copy. When the root binding
   ;; changes, the server picks it up without having to restart.
   (-> #'app
-      ; Makes static assets in $PROJECT_DIR/resources/public/ available.
+      ;; Makes static assets in $PROJECT_DIR/resources/public/ available.
       (wrap-file "resources")
-      ; Content-Type, Content-Length, and Last Modified headers for files in body
+      ;; Content-Type, Content-Length, and Last Modified headers for files in body
       (wrap-file-info)))
 
-(defn start-server
+(defn start
   "used for starting the server in development mode from REPL"
   [& [port]]
+  (start-figwheel!)
   (let [port (if port (Integer/parseInt port) 3000)]
     (reset! server
             (serve (get-handler)
@@ -28,6 +29,11 @@
                     :join? false}))
     (println (str "You can view the site at http://localhost:" port))))
 
-(defn stop-server []
+(defn stop []
   (.stop @server)
-  (reset! server nil))
+  (reset! server nil)
+  (stop-figwheel!))
+
+(defn cljs []
+  (cljs-repl))
+
