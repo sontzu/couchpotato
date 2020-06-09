@@ -91,11 +91,11 @@
                                   [nrepl "0.7.0"]
                                   [pjstadig/humane-test-output "0.10.0"]
                                   
- ]
+                                  ]
 
                    :source-paths ["env/dev/clj"]
                    :plugins [[lein-figwheel "0.5.20"]
-]
+                             ]
 
                    :injections [(require 'pjstadig.humane-test-output)
                                 (pjstadig.humane-test-output/activate!)]
